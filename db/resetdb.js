@@ -33,6 +33,7 @@ async function main() {
         await prisma.item.create({
             data: {
                title: 'Buy milk',
+               priority: 'high',
                // category: 'Everyday things',
                user: {
                     connect: {id: user1.id}

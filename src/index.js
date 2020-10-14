@@ -3,7 +3,6 @@ const { GraphQLServer } = require('graphql-yoga')
 const { PrismaClient } = require('@prisma/client')
 
 const PORT = process.env.PORT || 4000;
-{}
 const prisma = new PrismaClient({
     log: [
         { emit: 'event', level: 'warn'},
@@ -17,7 +16,7 @@ prisma.$on('warn', event => {
     e.target;
     console.log('[DB WARN]', e);
   });
-  
+
 prisma.$on('info', event => {
   e.timestamp;
   e.message;

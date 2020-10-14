@@ -12,7 +12,7 @@ model Item {
   createdAt     DateTime @default(now())
   title         String
   description   String?
-  priority      String?
+  priority      String
   user          User    @relation(fields: [userID], references: [id])
   userID        Int  
 }

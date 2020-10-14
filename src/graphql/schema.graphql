@@ -4,10 +4,9 @@ type Query {
 
 type Mutation {
     addItem(title: String!, description: String, priority: Priority): Item!
-    updateItem(id: Int!, title: String, description: String, priority: Priority): Item
+    editItem(id: Int!, title: String, description: String, priority: Priority): Item
     deleteItem(id: Int!): Item
 }
-
 
 type Item {
     id: ID!
