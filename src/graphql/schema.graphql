@@ -1,0 +1,28 @@
+type Query {
+    items(keyword: String, priority: Priority): [Item]!
+}
+
+type Mutation {
+    addItem(title: String!, description: String, priority: Priority): Item!
+    updateItem(id: Int!, title: String, description: String, priority: Priority): Item
+    deleteItem(id: Int!): Item
+}
+
+
+type Item {
+    id: ID!
+    title: String!
+    description: String
+    priority: Priority
+    user: User
+}
+
+type User {
+    id: ID!
+    username: String!
+}
+
+enum Priority {
+    low
+    high
+}
