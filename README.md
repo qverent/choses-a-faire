@@ -7,19 +7,49 @@ If your dotenv file is not in `db/`, install the dotenv-cli globally (`npm insta
 2. `npx prisma migrate up --experimental`
 3. `npx prisma generate`
 
-### To access the db GUI:
+#### To access the db GUI:
 `npx prisma studio`
 Please prepend with `dotenv -e [location of .env] -- ` if your dotenv file is not in `db/`.
 
-### To reset the database:
+#### To reset the database:
 Run from the root folder: `node db/resetdb.js`
 
 
 ## Testing the API
-## GraphQL Playground
-Enter `http://localhost:[port]/playground`
+#### GraphQL Playground
+Enter `http://localhost:[port]/playground` into your browser.
 
-## Sample CURL commands
+##### Sample queries
+```
+mutation{
+  editItem(id:14, title: "Almond milk", priority:normal){
+    title
+  }
+}
+
+mutation{
+	loginUser(username:"test1", password: "testing"){
+    user{
+      id
+    }
+    token
+  }
+}
+
+query{
+  items(keyword: "blahhhhh" priority: low){
+      title
+    	description
+  }
+}
+
+```
+##### Testing for auth with GraphQL Playground
+To test for auth, run the `loginUser` or `signupUser` mutations and copy the token into the `HTTP Headers` section:
+`{ "Authorization": "Bearer [token" }`
+
+
+#### Sample CURL commands
 `curl -H "Content-Type:application/json" -X POST -d '{"query":"{ items(keyword:\"milk\") { title } }" }' http://localhost:[port]/graphql`
 
 `curl -H "Content-Type:application/json" -X POST -d '{"query":"{ items { title } }" }' http://localhost:[port]/graphql`
