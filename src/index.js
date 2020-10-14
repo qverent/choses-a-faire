@@ -5,6 +5,8 @@ const { PrismaClient } = require('@prisma/client')
 const { errorHandler } = require('./utils/errorHandler')
 const { formatError } = require('apollo-errors');
 
+const { getUserID } = require('./utils/auth')
+
 const prisma = new PrismaClient( { errorFormat: 'minimal'});
 
 const Query = require('./graphql/resolvers/Query')
@@ -32,13 +34,15 @@ const server = new GraphQLServer({
     typeDefs: './src/graphql/schema.graphql',
     resolvers,
     middlewares: [ errorHandler ],
-    context: request => {
+    context: ({request}) => {
+      const userID = getUserID(request);
       return {
-      ...request,
-      prisma,
+        request,
+        prisma,
+        userID
+      }
     }
-  }
-  })
+})
 
 server.start(serverOptions, () => console.log(`Server is running on http://localhost:${PORT}`))    
 

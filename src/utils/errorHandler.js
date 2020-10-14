@@ -10,7 +10,7 @@ const AuthenticationError = createError('AuthenticationError', {
 });
 
 const AuthorizationError = createError('AuthorizationError', {
-    message: 'Items can only be updated by owner'
+    message: 'Action not authorized for user'
 });
 
 const OpaqueServerError = createError('ServerError', {
@@ -36,14 +36,14 @@ async function errorHandler (resolve, root, args, context, info) {
         return resolution;
     }
     catch (error) {
-        console.log('CAUGHT');
-        console.log(error);
         // Prisma errors
         if (error.code && error.code==='P2002' && error.message.includes('Unique constraint')) throw new SignupUsernameError;
         if (error.meta && error.meta.details && error.meta.details.includes('RecordNotFound'))
             throw new RecordNotFoundError;
         // Custom errors
         if (error.message==='Authentication') throw new AuthenticationError;
+        if (error.message==='Authorization') throw new AuthorizationError;
+        if (error.message==='NotFound') throw new RecordNotFoundError;
         if (error.message==='WeakPassword') throw new SignupPasswordError;
 
         throw new OpaqueServerError;
