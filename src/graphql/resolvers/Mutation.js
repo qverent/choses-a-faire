@@ -1,3 +1,8 @@
+const { createToken, generatePassword, validateCredentials } = require('../../utils/auth')
+
+/**
+ * Item mutations
+ */
 async function addItem(parent, args, context, info) {
   const newItem = await context.prisma.item.create({
     data: {
@@ -17,7 +22,6 @@ async function deleteItem(parent, args, context, info) {
     return deletedItem;
 }
 
-const { createError } = require('apollo-errors')
 
 async function editItem(parent, args, context, info) {
   const data = { };
@@ -31,8 +35,40 @@ async function editItem(parent, args, context, info) {
   return editedItem;
 }
 
+/**
+ * User and auth mutations
+ */
+async function signupUser(parent, args, context, info) {
+  const password = await generatePassword(args.password);
+  const user = await context.prisma.user.create({ data: { ...args, password } })
+  const token = createToken(user.id); 
+  return {
+    token,
+    user,
+  }
+}
+
+async function loginUser(parent, args, context, info) {
+  const user = await context.prisma.user.findOne({ where: { username: args.username } })
+  if (!user) {
+    throw new Error('Authentication')
+  }
+  const valid = await validateCredentials(args.password, user.password);
+  if (!valid) {
+    throw new Error('Authentication')
+  }
+  const token = createToken(user.id)
+  return {
+    token,
+    user,
+  }
+}
+
+
 module.exports = {
   addItem,
   deleteItem,
-  editItem
+  editItem,
+  signupUser,
+  loginUser,
 }

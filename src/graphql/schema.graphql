@@ -6,6 +6,13 @@ type Mutation {
     addItem(title: String!, description: String, priority: Priority): Item!
     editItem(id: Int!, title: String, description: String, priority: Priority): Item
     deleteItem(id: Int!): Item
+    signupUser(username: String!, password: String!): AuthPayload
+    loginUser(username: String!, password: String!): AuthPayload
+}
+
+type AuthPayload {
+  token: String
+  user: User
 }
 
 type Item {

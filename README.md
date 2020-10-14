@@ -24,3 +24,4 @@ Enter `http://localhost:[port]/playground`
 
 `curl -H "Content-Type:application/json" -X POST -d '{"query":"{ items { title } }" }' http://localhost:[port]/graphql`
 
+

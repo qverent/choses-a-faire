@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require('bcryptjs');
+const { generatePassword } = require('../src/utils/auth')
 
 const prisma = new PrismaClient()
 
@@ -15,7 +16,7 @@ async function main() {
     let user1, password1;
     // Populate with sample user
     try {
-        password1 = await bcrypt.hash(process.env.DB_PASSWD_1, 10);
+        password1 = await generatePassword(process.env.DB_PASSWD_1);
         user1 = await prisma.user.create({
             data: {
                 username: process.env.DB_USER_1,
