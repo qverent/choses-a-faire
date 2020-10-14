@@ -1,6 +1,20 @@
 # choses-a-faire
 GraphQL backend (for now) for a to do list
 
+
+## Features
+All to-dos are public, but only owners can edit/delete.
+
+Items can be searched by:
+* Priority (enum: `low`, `middle`, `high`)
+* A single keyword (searches in both `title` and `description`)
+* Priority AND keyword
+
+## To-dos/to improve upon
+Better error handling: the original stack trace is lost
+Move the authorization functions for editItem and addItem into middleware. I need to find a way to make middleware run for select resolvers.
+
+
 ## Setting up a database with Prisma
 If your dotenv file is not in `db/`, install the dotenv-cli globally (`npm install -g dotenv-cli`) and prepend the following commands with `dotenv -e [location of .env] -- `
 1. `npx prisma migrate save --experimental`
