@@ -11,8 +11,8 @@ Items can be searched by:
 * Priority AND keyword
 
 ## To-dos/to improve upon
-Better error handling: the original stack trace is lost
-Move the authorization functions for editItem and addItem into middleware. I need to find a way to make middleware run for select resolvers.
+* Better error handling: the original stack trace is lost, but the current solution outputs a standardized format, regardless of where the original error is thrown from
+* Move the authorization functions for editItem and addItem into middleware. I need to find a way to make middleware run for select resolvers.
 
 
 ## Setting up a database with Prisma
