@@ -1,6 +1,7 @@
 require('dotenv').config();
 const { GraphQLServer } = require('graphql-yoga')
 const { PrismaClient } = require('@prisma/client')
+const { errorHandler } = require('./utils/errorHandler')
 
 const prisma = new PrismaClient();
 
@@ -18,15 +19,23 @@ const resolvers = {
   User
 }
 
-const options = {
-    port: process.env.PORT || 4000,
+const PORT = process.env.PORT || 4000
+
+const serverOptions = {
+    port: PORT,
     endpoint: '/graphql',
     playground: '/playground'
 }
 
+// const errorHandler = async (resolve, root, args, context, info) => {
+//     const resolution = await resolve(root, args, context, info);
+//     return resolution;
+// }
+
 const server = new GraphQLServer({
     typeDefs: './src/graphql/schema.graphql',
     resolvers,
+    middlewares: [ errorHandler ],
     context: request => {
       return {
       ...request,
@@ -35,6 +44,6 @@ const server = new GraphQLServer({
   }
   })
 
-  server.start(options, () => console.log(`Server is running on http://localhost:${PORT}`))    
+server.start(serverOptions, () => console.log(`Server is running on http://localhost:${PORT}`))    
 
 
