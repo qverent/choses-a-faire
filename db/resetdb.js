@@ -9,8 +9,8 @@ async function main() {
     // Delete all rows from tables
     const deletedItems = await prisma.item.deleteMany({});
     const deletedUsers = await prisma.user.deleteMany({});
-    console.log(`[DB] ${deletedItems.count} items deleted`);
-    console.log(`[DB] ${deletedUsers.count} users deleted`);
+    console.log(`[DB RESET] ${deletedItems.count} items deleted`);
+    console.log(`[DB RESET] ${deletedUsers.count} users deleted`);
 
     let user1, password1;
     // Populate with sample user
@@ -22,9 +22,9 @@ async function main() {
                 password: password1
             }
         });
-        console.log('[DB] Sample user populated');
+        console.log('[DB RESET] Sample user populated');
     } catch (error) {
-        error.message = `[DB] Unable to create sample user: ${error.message}`;
+        error.message = `[DB RESET] Unable to create sample user: ${error.message}`;
         throw error;
     }
 
@@ -39,9 +39,9 @@ async function main() {
                 }
             }
         });
-        console.log('[DB] Sample item populated');
+        console.log('[DB RESET] Sample item populated');
     } catch (error) {
-        error.message = `[DB] Unable to create sample item: ${error.message}`;
+        error.message = `[DB RESET] Unable to create sample item: ${error.message}`;
         throw error;
     }
 }
