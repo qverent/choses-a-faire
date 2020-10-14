@@ -15,6 +15,15 @@ Items can be searched by:
 * Move the authorization functions for editItem and addItem into middleware. I need to find a way to make middleware run for select resolvers.
 
 
+## .env variables
+The following variables are required:
+* SECRET
+* DB_URL
+
+The following are optional, depending on your setup:
+* PORT (defaults to 4000 if not variable not found)
+* DB_USER_1 and DB_PASSWD_1 if you wish to use the `resetdb` script.
+
 ## Setting up a database with Prisma
 If your dotenv file is not in `db/`, install the dotenv-cli globally (`npm install -g dotenv-cli`) and prepend the following commands with `dotenv -e [location of .env] -- `
 1. `npx prisma migrate save --experimental`
