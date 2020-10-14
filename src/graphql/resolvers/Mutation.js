@@ -11,17 +11,13 @@ async function addItem(parent, args, context, info) {
 }
 
 async function deleteItem(parent, args, context, info) {
-  try {
     const deletedItem = await context.prisma.item.delete({
       where: { id: args.id }
     });
     return deletedItem;
-    }
-  catch (e) {
-    // If I catch it the client does not receive the errors array
-    console.log('logged');
-  }
 }
+
+const { createError } = require('apollo-errors')
 
 async function editItem(parent, args, context, info) {
   const data = { };

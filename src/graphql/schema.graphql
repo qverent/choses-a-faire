@@ -1,5 +1,5 @@
 type Query {
-    items(keyword: String, priority: Priority): [Item]!
+    items(keyword: String, priority: Priority): [Item!]!
 }
 
 type Mutation {
@@ -23,5 +23,6 @@ type User {
 
 enum Priority {
     low
+    normal
     high
 }
