@@ -1,4 +1,4 @@
-const { createToken, generatePassword, validateCredentials } = require('../../utils/auth')
+const { checkAuthorization, createToken, generatePassword, validateCredentials } = require('../../utils/auth')
 
 /**
  * Item mutations
@@ -17,11 +17,12 @@ async function addItem(parent, args, context, info) {
 }
 
 async function deleteItem(parent, args, context, info) {
-    const item = await context.prisma.item.findOne({
-      where: { id: args.id},
-    });
-    if (!item) throw new Error('NotFound');
-    if (item.userID !== context.userID) throw new Error('Authorization');
+    // const item = await context.prisma.item.findOne({
+    //   where: { id: args.id},
+    // });
+    // if (!item) throw new Error('NotFound');
+    // if (item.userID !== context.userID) throw new Error('Authorization');
+    await checkAuthorization(args.id, context.userID, context.prisma);
     const deletedItem = await context.prisma.item.delete({
       where: { id: args.id }
     });
@@ -30,11 +31,12 @@ async function deleteItem(parent, args, context, info) {
 
 
 async function editItem(parent, args, context, info) {
-  const item = await context.prisma.item.findOne({
-    where: { id: args.id},
-  });
-  if (!item) throw new Error('NotFound');
-  if (item.userID !== context.userID) throw new Error('Authorization');
+  // const item = await context.prisma.item.findOne({
+  //   where: { id: args.id},
+  // });
+  // if (!item) throw new Error('NotFound');
+  // if (item.userID !== context.userID) throw new Error('Authorization');
+  await checkAuthorization(args.id, context.userID, context.prisma);
   const data = { };
   if (args.title) data.title = args.title;
   if (args.description) data.description = args.description;

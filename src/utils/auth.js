@@ -3,9 +3,16 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const SECRET = process.env.SECRET
 
-async function checkAuthorization(mutation, ){
-    const needsAuthorization = ['editItem', 'deleteItem'];
-    
+/**
+ * Check that current user is able to execute action on specified item
+ * This should be moved to middleware TODO
+ */
+async function checkAuthorization(itemID, currentUserID, prisma){
+    const item = await prisma.item.findOne({
+        where: { id: itemID},
+      });
+      if (!item) throw new Error('NotFound');
+      if (item.userID !== currentUserID) throw new Error('Authorization');      
 }
 
 function createToken(userID) {
@@ -38,6 +45,7 @@ async function validateCredentials(enteredPassword, storedPassword) {
 
 module.exports = {
     getUserID,
+    checkAuthorization,
     createToken,
     generatePassword,
     SECRET,
