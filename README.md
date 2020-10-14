@@ -13,3 +13,14 @@ Please prepend with `dotenv -e [location of .env] -- ` if your dotenv file is no
 
 ### To reset the database:
 Run from the root folder: `node db/resetdb.js`
+
+
+## Testing the API
+## GraphQL Playground
+Enter `http://localhost:[port]/playground`
+
+## Sample CURL commands
+`curl -H "Content-Type:application/json" -X POST -d '{"query":"{ items(keyword:\"milk\") { title } }" }' http://localhost:[port]/graphql`
+
+`curl -H "Content-Type:application/json" -X POST -d '{"query":"{ items { title } }" }' http://localhost:[port]/graphql`
+

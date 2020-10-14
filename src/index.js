@@ -35,7 +35,13 @@ const resolvers = {
   Item,
   User
 }
-  
+
+const options = {
+    port: PORT,
+    endpoint: '/graphql',
+    playground: '/playground'
+}
+
 const server = new GraphQLServer({
     typeDefs: './src/graphql/schema.graphql',
     resolvers,
@@ -46,6 +52,6 @@ const server = new GraphQLServer({
     }
   }
   })
-  server.start(() => console.log(`Server is running on http://localhost:${PORT}`))    
+  server.start(options, () => console.log(`Server is running on http://localhost:${PORT}`))    
 
 
